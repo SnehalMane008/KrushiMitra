@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+
+{% block title %}Deliveries{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1 class="display-5">Deliveries</h1>
+    <a href="{{ url_for('add_delivery') }}" class="btn btn-success">
+        <i class="bi bi-plus-circle"></i> Add New Delivery
+    </a>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Supplier</th>
+                        <th>Delivery Date</th>
+                        <th>Quantity</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if deliveries %}
+                        {% for delivery in deliveries %}
+                        <tr>
+                            <td>{{ delivery.delivery_id }}</td>
+                            <td>{{ delivery.supplier_name }}</td>
+                            <td>{{ delivery.delivery_date }}</td>
+                            <td>{{ delivery.quantity }}</td>
+                            <td>
+                                <button type="button" class="btn btn-sm btn-info" data-bs-toggle="modal" data-bs-target="#deliveryModal{{ delivery.delivery_id }}">
+                                    <i class="bi bi-eye"></i> View
+                                </button>
+                            </td>
+                        </tr>
+                        
+                        <!-- Modal for delivery details -->
+                        <div class="modal fade" id="deliveryModal{{ delivery.delivery_id }}" tabindex="-1" aria-labelledby="deliveryModalLabel{{ delivery.delivery_id }}" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="deliveryModalLabel{{ delivery.delivery_id }}">Delivery Details</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p><strong>Delivery ID:</strong> {{ delivery.delivery_id }}</p>
+                                        <p><strong>Supplier:</strong> {{ delivery.supplier_name }}</p>
+                                        <p><strong>Delivery Date:</strong> {{ delivery.delivery_date }}</p>
+                                        <p><strong>Quantity:</strong> {{ delivery.quantity }}</p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    {% else %}
+                        <tr>
+                            <td colspan="5" class="text-center">No deliveries found</td>
+                        </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %} 

@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+
+{% block title %}Add Delivery{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-12">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{{ url_for('dashboard') }}">Dashboard</a></li>
+                <li class="breadcrumb-item"><a href="{{ url_for('deliveries') }}">Deliveries</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Add Delivery</li>
+            </ol>
+        </nav>
+        <h1 class="display-5">Record New Delivery</h1>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-body">
+                <form action="{{ url_for('add_delivery') }}" method="post">
+                    <div class="mb-3">
+                        <label for="supplier_id" class="form-label">Supplier</label>
+                        <select class="form-select" id="supplier_id" name="supplier_id" required>
+                            <option value="" selected disabled>Select a supplier</option>
+                            {% for supplier in suppliers %}
+                            <option value="{{ supplier.supplier_id }}">{{ supplier.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="delivery_date" class="form-label">Delivery Date</label>
+                        <input type="date" class="form-control" id="delivery_date" name="delivery_date" value="{{ today_date }}" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="quantity" class="form-label">Quantity</label>
+                        <input type="number" class="form-control" id="quantity" name="quantity" min="1" required>
+                    </div>
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                        <a href="{{ url_for('deliveries') }}" class="btn btn-secondary">Cancel</a>
+                        <button type="submit" class="btn btn-success">Record Delivery</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header bg-light">
+                <h5 class="card-title mb-0">Tips</h5>
+            </div>
+            <div class="card-body">
+                <ul>
+                    <li>Select the supplier who made the delivery</li>
+                    <li>Enter the actual date when products were delivered</li>
+                    <li>Enter the total quantity of items delivered</li>
+                    <li>For multiple products, you can create separate delivery records</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    // Set today's date as default
+    document.addEventListener('DOMContentLoaded', function() {
+        const today = new Date().toISOString().substr(0, 10);
+        document.getElementById('delivery_date').value = today;
+    });
+</script>
+{% endblock %} 

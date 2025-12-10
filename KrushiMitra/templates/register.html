@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+
+{% block title %}Register{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6 col-lg-5">
+        <div class="card shadow-sm">
+            <div class="card-header bg-success text-white text-center">
+                <img src="{{ url_for('static', filename='img/logo.svg') }}" alt="KrushiMitra Logo" width="40" height="40" class="mb-2">
+                <h3 class="card-title mb-0">Register for KrushiMitra</h3>
+            </div>
+            <div class="card-body">
+                {% if step == 'verify_otp' %}
+                <form method="post" action="{{ url_for('verify_otp') }}">
+                    <div class="mb-3">
+                        <p class="text-center">We've sent an OTP to your email <strong>{{ email }}</strong></p>
+                        <input type="hidden" name="email" value="{{ email }}">
+                        <input type="hidden" name="username" value="{{ username }}">
+                        <input type="hidden" name="password" value="{{ password }}">
+                        <label for="otp" class="form-label">Enter OTP</label>
+                        <input type="text" class="form-control" id="otp" name="otp" required autofocus>
+                    </div>
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-success">Verify OTP</button>
+                        <a href="{{ url_for('register') }}" class="btn btn-outline-secondary">Back</a>
+                    </div>
+                </form>
+                {% else %}
+                <form method="post" action="{{ url_for('register') }}">
+                    <div class="mb-3">
+                        <label for="username" class="form-label">Username</label>
+                        <input type="text" class="form-control" id="username" name="username" required autofocus>
+                    </div>
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="email" name="email" required>
+                        <small class="text-muted">We'll send an OTP to this email for verification</small>
+                    </div>
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Password</label>
+                        <input type="password" class="form-control" id="password" name="password" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="confirm_password" class="form-label">Confirm Password</label>
+                        <input type="password" class="form-control" id="confirm_password" name="confirm_password" required>
+                    </div>
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-success">Register</button>
+                        <a href="{{ url_for('login') }}" class="btn btn-outline-secondary">Already have an account? Login</a>
+                    </div>
+                </form>
+                {% endif %}
+            </div>
+            <div class="card-footer text-center">
+                <p class="mb-0">Agricultural Management System</p>
+                <p class="tagline-sm text-success mb-0"><strong>जय जवान जय किसान</strong></p>
+                <small class="text-muted">Developed by <strong class="dreamers-name">Dreamers</strong> - AISSMS IOIT, AI&DS Department</small><br>
+                <small class="text-muted">Under guidance of Dr. Sayali Belhe</small>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 
